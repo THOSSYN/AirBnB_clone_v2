@@ -10,7 +10,7 @@ env.hosts = ['54.237.100.5', '52.3.255.219']
 
 def do_clean(number=0):
     """Function that will clean-up old archive"""
-    umber = 1 if number == 0 else int(number)
+    number = 1 if number == 0 else int(number)
 
     fileNames = [Path(i) for i in os.listdir("versions")]
     for fullPath in fileNames[:-number]:
