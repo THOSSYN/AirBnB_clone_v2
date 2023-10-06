@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """A programme that fully deploys the content
    an archive to webservers
 """
