@@ -5,30 +5,28 @@ from fabric.api import *
 import os
 
 env.hosts = ['54.237.100.5', '52.3.255.219']
-env.user = 'ubuntu'
-env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_deploy(archive_path):
-    """This function distributes an archive to the web servers"""
     if not os.path.exists(archive_path):
         return False
 
     deriv_file = os.path.basename(archive_path)
     deriv_dest = os.path.splitext(deriv_file)[0]
-    derived_dest_path = f"/data/web_static/releases/{deriv_dest}"
+    derived_dest_path = "/data/web_static/releases/{}".format(deriv_dest)
 
     put(archive_path, '/tmp')
 
-    sudo(f"mkdir -p {derived_dest_path}")
-    sudo(f"tar -xzf /tmp/{deriv_file} -C {derived_dest_path}")
+    run("mkdir -p {}".format(derived_dest_path))
+    run("tar -xzf /tmp/{} -C {}".format(deriv_file, derived_dest_path))
 
-    run(f"rm /tmp/{deriv_file}")
-    
+    run("mv {}/web_static/* {}/".format(derived_dest_path, derived_dest_path))  # Corrected mv command
+
+    run("rm -rf {}/web_static".format(derived_dest_path))
+    run("rm /tmp/{}".format(deriv_file))
+
     with cd('/data/web_static'):
-        #sudo("unlink /data/web_static/current")
-        sudo('rm -f current')
-        sudo(f'ln -s {derived_dest_path} current')
-        #sudo(f'ln -s {derived_dest_path} /data/web_static/current")
+        run('rm -f current')
+        run('ln -s {} current'.format(derived_dest_path))
 
     return True
