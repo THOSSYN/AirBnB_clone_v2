@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Compresses a folder into a zip file"""
 
 from fabric.api import *
