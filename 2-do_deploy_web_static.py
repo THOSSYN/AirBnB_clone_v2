@@ -20,7 +20,8 @@ def do_deploy(archive_path):
     run("mkdir -p {}".format(derived_dest_path))
     run("tar -xzf /tmp/{} -C {}".format(deriv_file, derived_dest_path))
 
-    run("mv {}/web_static/* {}/".format(derived_dest_path, derived_dest_path))  # Corrected mv command
+    run("mv {}/web_static/* {}/"
+        .format(derived_dest_path, derived_dest_path))
 
     run("rm -rf {}/web_static".format(derived_dest_path))
     run("rm /tmp/{}".format(deriv_file))
