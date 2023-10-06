@@ -1,54 +1,23 @@
 # A puppet manifest to create a web root directory
-# Ensure Nginx is installed
-package { 'nginx':
-  ensure => installed,
-}
 
-file { '/data':
-  ensure  => directory,
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  mode    => '0755',
-  recurse => true,
-}
+$config = '<html>
+   <head>
+   </head>
+   <body>
+     Holberton School
+   </body>
+ </html>',
 
-file { [
-  '/data/web_static',
-  '/data/web_static/releases',
-  '/data/web_static/shared',
-  '/data/web_static/releases/test',
-]:
-  ensure  => directory,
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  mode    => '0755',
-  recurse => true,
-}
-
-file { '/data/web_static/releases/test/index.html':
-  ensure  => file,
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  mode    => '0644',
-  content => content => '<html>
-    <head>
-    </head>
-    <body>
-      Holberton School
-    </body>
-  </html>', 
-}
-
-file { '/data/web_static/current':
-  ensure => link,
-  target => '/data/web_static/releases/test/',
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-  force  => true,
-}
-
-service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => File['/data/web_static/current'],
+exec { 'install_and_configure':
+  command  => 'sudo apt-get update &&
+	       sudo apt-get install nginx -y &&
+	       sudo mkdir /data/web_static/releases/test/ &&
+	       sudo mkdir /data/web_static/shared/ &&
+	       sudo echo $config > /data/web_static/releases/test/index.html &&
+	       sudo ln -sf /data/web_static/releases/test/ /data/web_static/current &&
+	       sudo chown -R ubuntu:ubuntu /data/ &&
+	       update="\\\n\tlocation /hbnb_static {\n\talias /data/web_static/current/;\n\t}" &&
+	       sudo sed -i "55i $update" /etc/nginx/sites-available/default &&
+	       sudo service nginx restart',
+  provider =>  'shell',
 }
