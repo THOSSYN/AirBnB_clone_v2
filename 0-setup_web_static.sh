@@ -29,7 +29,7 @@ fi
 
 sudo ln -s "$releases_dir" "$base_dir/current"
 
-sudo chown -R "$USER:$USER" /data/
+sudo chown -R ubuntu:ubuntu /data/
 
 echo "server {
 	listen 80;
