@@ -70,3 +70,9 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """Closes and removes a session respectively from
+           scoped_session registry and returns it to connection pool
+        """
+        self.__session.close()

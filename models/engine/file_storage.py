@@ -13,7 +13,7 @@ class FileStorage:
         """
         if cls is not None:
             obj_dict = {key: obj for key, obj in FileStorage.__objects.items()
-                        if isinstance(obj, cls)}
+                        if type(obj) == cls}
             return obj_dict
         return FileStorage.__objects
 
@@ -59,3 +59,7 @@ class FileStorage:
             if key in FileStorage.__objects:
                 del FileStorage.__objects[key]
                 self.save()
+
+    def close(self):
+        """Deserializes object again to be used to perform close ops"""
+        reload()
