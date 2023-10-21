@@ -25,13 +25,11 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
 
     storage_type = os.getenv("HBNB_TYPE_STORAGE")
-    
-    #if storage_type == 'db':
-    reviews = relationship("Review", backref="place",
-                               cascade="all, delete-orphan")
-    amenities = relationship("Amenity", secondary="place_amenity",
-                                 viewonly=False)
 
+    reviews = relationship("Review", backref="place",
+                           cascade="all, delete-orphan")
+    amenities = relationship("Amenity", secondary="place_amenity",
+                             viewonly=False)
 
     if storage_type != 'db':
         amenity_ids = []
