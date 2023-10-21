@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}">
+    </HEAD>
+    <BODY>
+        <header>
+            <div id="logo"></div>
+            <div id="title">
+                <H1>HBNB</H1>
+            </div>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#">Places</a></li>
+                <li><a href="#">Reviews</a></li>
+                <li><a href="#">More</a></li>
+            </ul>
+        </nav>
+        <section class="filters">
+            <h2>Search</h2>
+            <div class="locations">
+                <H3>States</H3>
+                <h4>&nbsp;</h4>
+                <ul class="popover">
+                    {% for state in states %}
+                        <li><h2>{{ state.name }}</h2></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="locations">
+                <H3>Cities</H3>
+                <h4>&nbsp;</h4>
+                <ul class="popover">
+                    {% for city in cities %}
+                        <li><h2>{{ city.name }}</h2></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="amenities">
+                <H3>Amenities</H3>
+                <h4>&nbsp;</h4>
+                <ul class="popover">
+                    {% for amenity in amenities %}
+                        <li><h2>{{ amenity.name }}</h2></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+    </BODY>
+</HTML>
