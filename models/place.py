@@ -26,10 +26,10 @@ class Place(BaseModel, Base):
 
     storage_type = os.getenv("HBNB_TYPE_STORAGE")
     
-    if storage_type == 'db':
-        reviews = relationship("Review", backref="place",
+    #if storage_type == 'db':
+    reviews = relationship("Review", backref="place",
                                cascade="all, delete-orphan")
-        amenities = relationship("Amenity", secondary="place_amenity",
+    amenities = relationship("Amenity", secondary="place_amenity",
                                  viewonly=False)
 
 
